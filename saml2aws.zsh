@@ -44,6 +44,7 @@ saml-role () {
   else 
     export SAML2AWS_ROLE=${ROLE}
     export AWS_PROFILE=$(echo ${SAML2AWS_ROLE} | sed -e 's/:/__/g')
+    export AWS_REGION=${SAML2AWS_REGION}
     export SAML2AWS_PROFILE=$(echo ${SAML2AWS_ROLE} | sed -e 's/:/__/g')
     echo "SAML2AWS_ROLE=${SAML2AWS_ROLE}" > ~/.aws/default_role
     echo "AWS_PROFILE=${AWS_PROFILE}" >> ~/.aws/default_role
