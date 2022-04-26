@@ -16,6 +16,10 @@ Recommended Variables:
 * SAML2AWS_SESSION_DURATION: set it to 28800 if possible
 * SAML2AWS_ROLE: default AWS role to use
 
+you need to install 'percol'
+
+`brew install percol`
+
 *Good luck!*
 
 On First run, execute `saml-refresh` so the plugin will download the list of available roles.
