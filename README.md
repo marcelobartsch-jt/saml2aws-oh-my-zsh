@@ -18,3 +18,4 @@ Recommended Variables:
 
 *Good luck!*
 
+On First run, execute `saml-refresh` so the plugin will download the list of available roles.
