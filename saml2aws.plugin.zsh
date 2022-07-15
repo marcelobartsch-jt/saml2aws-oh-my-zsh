@@ -37,19 +37,23 @@ saml-role () {
   if [ ! -e $HOME/.aws/roles ] ; then
      saml-refresh
   fi
-  ROLE=$(cat $HOME/.aws/roles | percol --prompt='<green>Select your AWS profile:</green> %q')
+  ROLE=$(cat $HOME/.aws/roles | fzf --header='Select your AWS profile')
  
   if [ $? -eq 127 ] ; then
      echo "You need to install 'percol' to use saml-role"
   else 
-    export SAML2AWS_ROLE=${ROLE}
-    export AWS_PROFILE=$(echo ${SAML2AWS_ROLE} | sed -e 's/:/__/g')
-    export AWS_REGION=${SAML2AWS_REGION}
-    export SAML2AWS_PROFILE=$(echo ${SAML2AWS_ROLE} | sed -e 's/:/__/g')
-    echo "SAML2AWS_ROLE=${SAML2AWS_ROLE}" > ~/.aws/default_role
-    echo "AWS_PROFILE=${AWS_PROFILE}" >> ~/.aws/default_role
-    echo "SAML2AWS_PROFILE=${SAML2AWS_PROFILE}" >> ~/.aws/default_role
-    saml-login
+    if [ -z ${ROLE} ] ; then
+	echo "No Profile Selected"
+    else
+      export SAML2AWS_ROLE=${ROLE}
+      export AWS_PROFILE=$(echo ${SAML2AWS_ROLE} | awk -F: '{print $5 ":" $6}')
+      export AWS_REGION=${SAML2AWS_REGION}
+      export SAML2AWS_PROFILE=$AWS_PROFILE
+      echo "SAML2AWS_ROLE=${SAML2AWS_ROLE}" > ~/.aws/default_role
+      echo "AWS_PROFILE=${AWS_PROFILE}" >> ~/.aws/default_role
+      echo "SAML2AWS_PROFILE=${SAML2AWS_PROFILE}" >> ~/.aws/default_role
+      saml-login
+    fi
   fi
 }
 
