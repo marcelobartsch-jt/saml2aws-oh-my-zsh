@@ -37,7 +37,11 @@ saml-role () {
   if [ ! -e $HOME/.aws/roles ] ; then
      saml-refresh
   fi
-  ROLE=$(cat $HOME/.aws/roles | fzf --header='Select your AWS profile')
+  if [ -z $1 ] ; then
+    ROLE=$(cat $HOME/.aws/roles | fzf --header='Select your AWS profile')
+  else
+    ROLE=$(cat $HOME/.aws/roles | fzf --header='Select your AWS profile' -1 -q $1)
+  fi
  
   if [ $? -eq 127 ] ; then
      echo "You need to install 'percol' to use saml-role"
