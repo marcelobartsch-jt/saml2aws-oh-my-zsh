@@ -44,7 +44,7 @@ saml-role () {
   fi
 
   if [ $? -eq 127 ] ; then
-     echo "You need to install 'percol' to use saml-role"
+     echo "You need to install 'fzf' to use saml-role"
   else
     if [ -z ${ROLE} ] ; then
       echo "No Profile Selected"
