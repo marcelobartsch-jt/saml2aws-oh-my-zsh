@@ -16,7 +16,7 @@ function saml2aws_update()
 saml-login() {
   saml2aws login --skip-prompt $*
   if [ $? -ne 0 ] ; then
-    rm -f source ~/.aws/default_role 
+    rm -f source ~/.aws/default_role
   fi
 }
 
@@ -42,12 +42,12 @@ saml-role () {
   else
     ROLE=$(cat $HOME/.aws/roles | fzf --header='Select your AWS profile' -1 -q $1)
   fi
- 
+
   if [ $? -eq 127 ] ; then
      echo "You need to install 'percol' to use saml-role"
-  else 
+  else
     if [ -z ${ROLE} ] ; then
-	echo "No Profile Selected"
+      echo "No Profile Selected"
     else
       export SAML2AWS_ROLE=${ROLE}
       export AWS_PROFILE=$(echo ${SAML2AWS_ROLE} | awk -F: '{print $5 ":" $6}')
