@@ -49,9 +49,9 @@ saml-role () {
     if [ -z ${ROLE} ] ; then
       echo "No Profile Selected"
     else
+      [ -z ${SAML2AWS_REGION} ] || export AWS_REGION=${SAML2AWS_REGION}
       export SAML2AWS_ROLE=${ROLE}
       export AWS_PROFILE=$(echo ${SAML2AWS_ROLE} | awk -F: '{print $5 ":" $6}')
-      export AWS_REGION=${SAML2AWS_REGION}
       export SAML2AWS_PROFILE=$AWS_PROFILE
       echo "SAML2AWS_ROLE=${SAML2AWS_ROLE}" > ~/.aws/default_role
       echo "AWS_PROFILE=${AWS_PROFILE}" >> ~/.aws/default_role
