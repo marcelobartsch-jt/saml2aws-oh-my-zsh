@@ -28,7 +28,7 @@ saml-refresh() {
     mkdir ~/.aws
   fi
   saml2aws list-roles --skip-prompt > ~/.aws/roles.new
-  grep ^arn ~/.aws/roles.new > ~/.aws/roles
+  grep "^arn" ~/.aws/roles.new > ~/.aws/roles
   ls -al ~/.aws/roles*
   set +x
 }
