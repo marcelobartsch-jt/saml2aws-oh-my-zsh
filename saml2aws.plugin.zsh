@@ -51,7 +51,11 @@ saml-role () {
     else
       [ -z ${SAML2AWS_REGION} ] || export AWS_REGION=${SAML2AWS_REGION}
       export SAML2AWS_ROLE=${ROLE}
-      export AWS_PROFILE=$(echo ${SAML2AWS_ROLE} | awk -F: '{print $5 ":" $6}')
+      if [ "$SAML2AWS_PROFILE_SHORT" = "true" ] ; then
+          export AWS_PROFILE=$(echo ${SAML2AWS_ROLE} | awk -F/ '{print $2}' | sed -e 's/-okta-/\//' -e 's/-saml-/\//' -e 's/-iam-role//')
+      else
+          export AWS_PROFILE=$(echo ${SAML2AWS_ROLE} | awk -F: '{print $5 ":" $6}')
+      fi
       export SAML2AWS_PROFILE=$AWS_PROFILE
       echo "SAML2AWS_ROLE=${SAML2AWS_ROLE}" > ~/.aws/default_role
       echo "AWS_PROFILE=${AWS_PROFILE}" >> ~/.aws/default_role
